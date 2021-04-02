@@ -12,6 +12,8 @@ namespace CSharpKata.Test
 
         private Item ordinaryItem;
         private Item agedBrie;
+        private Item sulfuras;
+        private Item backstagePass;
         private GildedRose ordinaryRose;
 
         [TestInitialize]
@@ -29,6 +31,20 @@ namespace CSharpKata.Test
                 Name = "Aged Brie",
                 Quality = StartingQuality,
                 SellIn = StartingSellIn
+            };
+
+            sulfuras = new Item
+            {
+                Name = "Sulfuras, Hand of Ragnaros",
+                Quality = StartingQuality,
+                SellIn = StartingSellIn
+            };
+
+            backstagePass = new Item
+            {
+                Name = "Backstage passes to a TAFKAL80ETC concert",
+                Quality = StartingQuality,
+                SellIn = 20
             };
 
             ordinaryRose = new GildedRose(new[] { ordinaryItem });
@@ -79,8 +95,25 @@ namespace CSharpKata.Test
             var rose = new GildedRose(new[] { agedBrie });
             rose.UpdateQuality();
 
-            Assert.AreEqual(StartingQuality + 1, agedBrie.Quality);
+            Assert.AreEqual(StartingSellIn - 1, agedBrie.SellIn);
         }
 
+        [TestMethod]
+        public void GivenSulfuras_AfterUpdate_QualityRemainsUnchanged()
+        {
+            var rose = new GildedRose(new[] { sulfuras });
+            rose.UpdateQuality();
+
+            Assert.AreEqual(StartingQuality, sulfuras.Quality);
+        }
+
+        [TestMethod]
+        public void GivenSulfuras_AfterUpdate_SellInRemainsUnchanged()
+        {
+            var rose = new GildedRose(new[] { sulfuras });
+            rose.UpdateQuality();
+
+            Assert.AreEqual(StartingSellIn, sulfuras.SellIn);
+        }
     }
 }
