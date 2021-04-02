@@ -1,0 +1,49 @@
+#Compiled object files
+*.slo
+*.lo
+*.o
+*.obj
+
+#Precompiled Headers
+*.gch
+*.pch
+
+#Compiled dynamic libraries
+*.so
+*.dylib
+*.dll
+
+#Compiled static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+#Executables
+*.exe
+
+#debug files
+*.pdb
+
+#log files
+*.log
+
+#Folders
+bin
+lib/*
+obj
+.vs
+output
+lib
+TestResults
+CoverageReport*
+CodeCoverageOutput
+
+#Project/Filter/Solution files
+*.vcxproj*
+*.sln
+
+#Other random files to exclude
+*runtimedependencies.txt
+*.lock
+*.dat
