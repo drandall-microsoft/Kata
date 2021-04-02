@@ -21,9 +21,9 @@ namespace CSharpKata.Test
         public void SetUp()
         {
             ordinaryItem = CreateItem(OrdinaryItemName);
-            agedBrie = CreateItem("Aged Brie");
-            sulfuras = CreateItem("Sulfuras, Hand of Ragnaros");
-            backstagePass = CreateItem("Backstage passes to a TAFKAL80ETC concert");
+            agedBrie = CreateItem(GildedRose.AgedBrie);
+            sulfuras = CreateItem(GildedRose.Sulfuras);
+            backstagePass = CreateItem(GildedRose.BackStagePass);
 
             ordinaryRose = new GildedRose(new[] { ordinaryItem });
             allItemsRose = new GildedRose(new[] { ordinaryItem, agedBrie, sulfuras, backstagePass });
@@ -75,6 +75,16 @@ namespace CSharpKata.Test
             rose.UpdateQuality();
 
             Assert.AreEqual(StartingSellIn - 1, agedBrie.SellIn);
+        }
+
+        [TestMethod]
+        public void GivenMaxedValueAgedBrie_AfterUpdate_QualityRemainsUnchanged()
+        {
+            agedBrie.Quality = 50;
+            var rose = new GildedRose(new[] { agedBrie });
+            rose.UpdateQuality();
+
+            Assert.AreEqual(50, agedBrie.Quality);
         }
 
         [TestMethod]
@@ -138,6 +148,8 @@ namespace CSharpKata.Test
         [TestMethod]
         public void GivenAllItems_AfterUpdate_QualityAndSellInChangeAppropriately()
         {
+            backstagePass.SellIn = 25;
+
             allItemsRose.UpdateQuality();
 
             Assert.AreEqual(StartingSellIn - 1, ordinaryItem.SellIn);
@@ -146,9 +158,11 @@ namespace CSharpKata.Test
             Assert.AreEqual(StartingSellIn - 1, agedBrie.SellIn);
             Assert.AreEqual(StartingQuality + 1, agedBrie.Quality);
 
-            Assert.AreEqual(StartingSellIn - 1, sulfuras.SellIn);
-            Assert.AreEqual(StartingQuality + 1, sulfuras.Quality);
+            Assert.AreEqual(StartingSellIn, sulfuras.SellIn);
+            Assert.AreEqual(StartingQuality, sulfuras.Quality);
 
+            Assert.AreEqual(24, backstagePass.SellIn);
+            Assert.AreEqual(StartingQuality + 1, backstagePass.Quality);
         }
 
         private Item CreateItem(string name)
