@@ -1,4 +1,4 @@
-﻿using CSharpKatas;
+﻿using CSharpKatas.GildedRose;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace CSharpKata.Test
@@ -46,7 +46,7 @@ namespace CSharpKata.Test
         [TestMethod]
         public void GivenAnItemWithZeroQuality_AfterUpdate_QualityRemainsAtZero()
         {
-            ordinaryItem.Quality = 0;
+            ordinaryItem.Quality = GildedRose.MinQuality;
             ordinaryRose.UpdateQuality();
             Assert.AreEqual(0, ordinaryItem.Quality);
         }

@@ -8,14 +8,15 @@ namespace CSharpKatas.GildedRose
     {
         private Item item;
 
-        public AgedBrie(Item item) 
-        { 
-            this.item = item; 
+        public AgedBrie(Item item)
+        {
+            this.item = item;
         }
 
         public void UpdateQuality()
         {
-            //TODO
+            item.Quality = Math.Min(GildedRose.MaxQuality, item.Quality++);
+            item.SellIn--;
         }
     }
 }

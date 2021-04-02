@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace CSharpKatas
+namespace CSharpKatas.GildedRose
 {
     public class GildedRose
     {
@@ -14,37 +14,6 @@ namespace CSharpKatas
         public GildedRose(IList<Item> Items)
         {
             this.Items = Items;
-        }
-
-        public class ItemFactory
-        {
-            public ISpecificItem Create(Item item)
-            {
-                switch (item.Name)
-                {
-                    case AgedBrie: return new AgedBrieItem(item);
-                    default: return new OrdinaryItem(item);
-                }
-            }
-        }
-
-        public interface ISpecificItem
-        {
-            void UpdateQuality();
-        }
-
-        public class AgedBrieItem : ISpecificItem
-        {
-            private Item item;
-            public AgedBrieItem(Item item)
-            {
-                this.item = item;
-            }
-
-            public void UpdateQuality()
-            {
-                // TODO: implement
-            }
         }
 
         public void UpdateQuality()
