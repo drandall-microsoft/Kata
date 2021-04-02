@@ -8,6 +8,8 @@ namespace CSharpKatas
         public static string AgedBrie { get; } = "Aged Brie";
         public static string Sulfuras { get; } = "Sulfuras, Hand of Ragnaros";
         public static string BackStagePass { get; } = "Backstage passes to a TAFKAL80ETC concert";
+        public static int MaxQuality { get; } = 50;
+        public static int MinQuality { get; } = 0;
 
         public GildedRose(IList<Item> Items)
         {
@@ -20,7 +22,7 @@ namespace CSharpKatas
             {
                 if (Items[i].Name != AgedBrie && Items[i].Name != BackStagePass)
                 {
-                    if (Items[i].Quality > 0)
+                    if (Items[i].Quality > MinQuality)
                     {
                         if (Items[i].Name != Sulfuras)
                         {
@@ -30,7 +32,7 @@ namespace CSharpKatas
                 }
                 else
                 {
-                    if (Items[i].Quality < 50)
+                    if (Items[i].Quality < MaxQuality)
                     {
                         Items[i].Quality = Items[i].Quality + 1;
 
@@ -38,7 +40,7 @@ namespace CSharpKatas
                         {
                             if (Items[i].SellIn < 11)
                             {
-                                if (Items[i].Quality < 50)
+                                if (Items[i].Quality < MaxQuality)
                                 {
                                     Items[i].Quality = Items[i].Quality + 1;
                                 }
@@ -46,7 +48,7 @@ namespace CSharpKatas
 
                             if (Items[i].SellIn < 6)
                             {
-                                if (Items[i].Quality < 50)
+                                if (Items[i].Quality < MaxQuality)
                                 {
                                     Items[i].Quality = Items[i].Quality + 1;
                                 }
@@ -60,13 +62,13 @@ namespace CSharpKatas
                     Items[i].SellIn = Items[i].SellIn - 1;
                 }
 
-                if (Items[i].SellIn < 0)
+                if (Items[i].SellIn < MinQuality)
                 {
                     if (Items[i].Name != AgedBrie)
                     {
                         if (Items[i].Name != BackStagePass)
                         {
-                            if (Items[i].Quality > 0)
+                            if (Items[i].Quality > MinQuality)
                             {
                                 if (Items[i].Name != Sulfuras)
                                 {
@@ -81,7 +83,7 @@ namespace CSharpKatas
                     }
                     else
                     {
-                        if (Items[i].Quality < 50)
+                        if (Items[i].Quality < MaxQuality)
                         {
                             Items[i].Quality = Items[i].Quality + 1;
                         }

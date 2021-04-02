@@ -80,11 +80,11 @@ namespace CSharpKata.Test
         [TestMethod]
         public void GivenMaxedValueAgedBrie_AfterUpdate_QualityRemainsUnchanged()
         {
-            agedBrie.Quality = 50;
+            agedBrie.Quality = GildedRose.MaxQuality;
             var rose = new GildedRose(new[] { agedBrie });
             rose.UpdateQuality();
 
-            Assert.AreEqual(50, agedBrie.Quality);
+            Assert.AreEqual(GildedRose.MaxQuality, agedBrie.Quality);
         }
 
         [TestMethod]
