@@ -4,18 +4,18 @@ using System.Text;
 
 namespace CSharpKatas.GildedRose
 {
-    internal class OrdinaryItem : ISpecificItem
+    internal abstract class AppericatingItem : ISpecificItem
     {
-        private Item item;
+        protected Item item;
 
-        public OrdinaryItem(Item item)
+        public AppericatingItem(Item item)
         {
             this.item = item;
         }
 
         public void UpdateQuality()
         {
-            item.Quality = Math.Max(GildedRose.MinQuality, item.Quality - GildedRose.DevalueRate);
+            item.Quality = Math.Min(GildedRose.MaxQuality, item.Quality + 1);
             item.SellIn--;
         }
     }

@@ -8,8 +8,10 @@ namespace CSharpKatas.GildedRose
         public const string AgedBrie = "Aged Brie";
         public const string Sulfuras = "Sulfuras, Hand of Ragnaros";
         public const string BackStagePass = "Backstage passes to a TAFKAL80ETC concert";
+        public const string Conjured = "Conjured";
         public const int MaxQuality = 50;
         public const int MinQuality = 0;
+        public const int DevalueRate = 1;
 
         public GildedRose(IList<Item> Items)
         {
@@ -18,89 +20,12 @@ namespace CSharpKatas.GildedRose
 
         public void UpdateQuality()
         {
-            for (var i = 0; i < Items.Count; i++)
+            var factory = new SpecificItemFactory();
+
+            foreach (var item in Items)
             {
-                if (Items[i].Name != AgedBrie && Items[i].Name != BackStagePass)
-                {
-                    if (Items[i].Quality > MinQuality)
-                    {
-                        if (Items[i].Name != Sulfuras)
-                        {
-                            Items[i].Quality = Items[i].Quality - 1;
-                        }
-                    }
-                }
-                else
-                {
-                    if (Items[i].Quality < MaxQuality)
-                    {
-                        Items[i].Quality = Items[i].Quality + 1;
-
-                        if (Items[i].Name == BackStagePass)
-                        {
-                            if (Items[i].SellIn < 11)
-                            {
-                                if (Items[i].Quality < MaxQuality)
-                                {
-                                    Items[i].Quality = Items[i].Quality + 1;
-                                }
-                            }
-
-                            if (Items[i].SellIn < 6)
-                            {
-                                if (Items[i].Quality < MaxQuality)
-                                {
-                                    Items[i].Quality = Items[i].Quality + 1;
-                                }
-                            }
-                        }
-                    }
-                }
-
-                if (Items[i].Name != Sulfuras)
-                {
-                    Items[i].SellIn = Items[i].SellIn - 1;
-                }
-
-                if (Items[i].SellIn < MinQuality)
-                {
-                    if (Items[i].Name != AgedBrie)
-                    {
-                        if (Items[i].Name != BackStagePass)
-                        {
-                            if (Items[i].Quality > MinQuality)
-                            {
-                                if (Items[i].Name != Sulfuras)
-                                {
-                                    Items[i].Quality = Items[i].Quality - 1;
-                                }
-                            }
-                        }
-                        else
-                        {
-                            Items[i].Quality = Items[i].Quality - Items[i].Quality;
-                        }
-                    }
-                    else
-                    {
-                        if (Items[i].Quality < MaxQuality)
-                        {
-                            Items[i].Quality = Items[i].Quality + 1;
-                        }
-                    }
-                }
+                factory.Create(item).UpdateQuality();
             }
         }
-
     }
-
-    public class Item
-    {
-        public string Name { get; set; }
-
-        public int SellIn { get; set; }
-
-        public int Quality { get; set; }
-    }
-
 }

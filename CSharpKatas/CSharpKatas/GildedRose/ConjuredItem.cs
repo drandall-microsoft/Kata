@@ -4,18 +4,18 @@ using System.Text;
 
 namespace CSharpKatas.GildedRose
 {
-    internal class OrdinaryItem : ISpecificItem
+    internal class ConjuredItem : ISpecificItem
     {
-        private Item item;
+        protected Item item;
 
-        public OrdinaryItem(Item item)
+        public ConjuredItem(Item item)
         {
             this.item = item;
         }
 
         public void UpdateQuality()
         {
-            item.Quality = Math.Max(GildedRose.MinQuality, item.Quality - GildedRose.DevalueRate);
+            item.Quality = Math.Max(GildedRose.MinQuality, item.Quality - (GildedRose.DevalueRate * 2));
             item.SellIn--;
         }
     }

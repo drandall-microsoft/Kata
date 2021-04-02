@@ -14,6 +14,7 @@ namespace CSharpKata.Test
         private Item agedBrie;
         private Item sulfuras;
         private Item backstagePass;
+        private Item conjuredItem;
         private GildedRose ordinaryRose;
         private GildedRose allItemsRose;
 
@@ -24,6 +25,7 @@ namespace CSharpKata.Test
             agedBrie = CreateItem(GildedRose.AgedBrie);
             sulfuras = CreateItem(GildedRose.Sulfuras);
             backstagePass = CreateItem(GildedRose.BackStagePass);
+            conjuredItem = CreateItem(GildedRose.Conjured);
 
             ordinaryRose = new GildedRose(new[] { ordinaryItem });
             allItemsRose = new GildedRose(new[] { ordinaryItem, agedBrie, sulfuras, backstagePass });
@@ -144,6 +146,16 @@ namespace CSharpKata.Test
 
             Assert.AreEqual(0, backstagePass.Quality);
         }
+
+        [TestMethod]
+        public void GivenConjuredItem_AfterUpdate_QualityIsReducedByTwo()
+        {
+            var rose = new GildedRose(new[] { conjuredItem });
+            rose.UpdateQuality();
+
+            Assert.AreEqual(StartingQuality - 2, conjuredItem.Quality);
+        }
+
 
         [TestMethod]
         public void GivenAllItems_AfterUpdate_QualityAndSellInChangeAppropriately()
