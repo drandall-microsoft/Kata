@@ -5,15 +5,46 @@ namespace CSharpKatas
     public class GildedRose
     {
         IList<Item> Items;
-        public static string AgedBrie { get; } = "Aged Brie";
-        public static string Sulfuras { get; } = "Sulfuras, Hand of Ragnaros";
-        public static string BackStagePass { get; } = "Backstage passes to a TAFKAL80ETC concert";
-        public static int MaxQuality { get; } = 50;
-        public static int MinQuality { get; } = 0;
+        public const string AgedBrie = "Aged Brie";
+        public const string Sulfuras = "Sulfuras, Hand of Ragnaros";
+        public const string BackStagePass = "Backstage passes to a TAFKAL80ETC concert";
+        public const int MaxQuality = 50;
+        public const int MinQuality = 0;
 
         public GildedRose(IList<Item> Items)
         {
             this.Items = Items;
+        }
+
+        public class ItemFactory
+        {
+            public ISpecificItem Create(Item item)
+            {
+                switch (item.Name)
+                {
+                    case AgedBrie: return new AgedBrieItem(item);
+                    default: return new OrdinaryItem(item);
+                }
+            }
+        }
+
+        public interface ISpecificItem
+        {
+            void UpdateQuality();
+        }
+
+        public class AgedBrieItem : ISpecificItem
+        {
+            private Item item;
+            public AgedBrieItem(Item item)
+            {
+                this.item = item;
+            }
+
+            public void UpdateQuality()
+            {
+                // TODO: implement
+            }
         }
 
         public void UpdateQuality()
