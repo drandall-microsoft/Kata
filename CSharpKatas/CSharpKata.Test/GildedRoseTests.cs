@@ -15,39 +15,18 @@ namespace CSharpKata.Test
         private Item sulfuras;
         private Item backstagePass;
         private GildedRose ordinaryRose;
+        private GildedRose allItemsRose;
 
         [TestInitialize]
         public void SetUp()
         {
-            ordinaryItem = new Item
-            {
-                Name = OrdinaryItemName,
-                Quality = StartingQuality,
-                SellIn = StartingSellIn
-            };
-
-            agedBrie = new Item
-            {
-                Name = "Aged Brie",
-                Quality = StartingQuality,
-                SellIn = StartingSellIn
-            };
-
-            sulfuras = new Item
-            {
-                Name = "Sulfuras, Hand of Ragnaros",
-                Quality = StartingQuality,
-                SellIn = StartingSellIn
-            };
-
-            backstagePass = new Item
-            {
-                Name = "Backstage passes to a TAFKAL80ETC concert",
-                Quality = StartingQuality,
-                SellIn = 20
-            };
+            ordinaryItem = CreateItem(OrdinaryItemName);
+            agedBrie = CreateItem("Aged Brie");
+            sulfuras = CreateItem("Sulfuras, Hand of Ragnaros");
+            backstagePass = CreateItem("Backstage passes to a TAFKAL80ETC concert");
 
             ordinaryRose = new GildedRose(new[] { ordinaryItem });
+            allItemsRose = new GildedRose(new[] { ordinaryItem, agedBrie, sulfuras, backstagePass });
         }
 
         [TestMethod]
@@ -114,6 +93,72 @@ namespace CSharpKata.Test
             rose.UpdateQuality();
 
             Assert.AreEqual(StartingSellIn, sulfuras.SellIn);
+        }
+
+        [TestMethod]
+        public void GivenBackstagePassWithMoreThanTenDaysLeft_AfterUpdate_QualityIncreasesByOne()
+        {
+            backstagePass.SellIn = 20;
+            var rose = new GildedRose(new[] { backstagePass });
+            rose.UpdateQuality();
+
+            Assert.AreEqual(StartingQuality + 1, backstagePass.Quality);
+        }
+
+        [TestMethod]
+        public void GivenBackstagePassWithTenDaysLeft_AfterUpdate_QualityIncreasesByTwo()
+        {
+            backstagePass.SellIn = 10;
+            var rose = new GildedRose(new[] { backstagePass });
+            rose.UpdateQuality();
+
+            Assert.AreEqual(StartingQuality + 2, backstagePass.Quality);
+        }
+
+        [TestMethod]
+        public void GivenBackstagePassWithFiveDaysLeft_AfterUpdate_QualityIncreasesByThree()
+        {
+            backstagePass.SellIn = 5;
+            var rose = new GildedRose(new[] { backstagePass });
+            rose.UpdateQuality();
+
+            Assert.AreEqual(StartingQuality + 3, backstagePass.Quality);
+        }
+
+        [TestMethod]
+        public void GivenBackstagePassWithZeroDaysLeft_AfterUpdate_QualityIsSetToZero()
+        {
+            backstagePass.SellIn = 0;
+            var rose = new GildedRose(new[] { backstagePass });
+            rose.UpdateQuality();
+
+            Assert.AreEqual(0, backstagePass.Quality);
+        }
+
+        [TestMethod]
+        public void GivenAllItems_AfterUpdate_QualityAndSellInChangeAppropriately()
+        {
+            allItemsRose.UpdateQuality();
+
+            Assert.AreEqual(StartingSellIn - 1, ordinaryItem.SellIn);
+            Assert.AreEqual(StartingQuality - 1, ordinaryItem.Quality);
+
+            Assert.AreEqual(StartingSellIn - 1, agedBrie.SellIn);
+            Assert.AreEqual(StartingQuality + 1, agedBrie.Quality);
+
+            Assert.AreEqual(StartingSellIn - 1, sulfuras.SellIn);
+            Assert.AreEqual(StartingQuality + 1, sulfuras.Quality);
+
+        }
+
+        private Item CreateItem(string name)
+        {
+            return new Item
+            {
+                Name = name,
+                Quality = StartingQuality,
+                SellIn = StartingSellIn
+            };
         }
     }
 }
