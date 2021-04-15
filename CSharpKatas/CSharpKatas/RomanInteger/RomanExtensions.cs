@@ -34,14 +34,14 @@ namespace CSharpKatas.RomanInteger
             //1 -> I
             switch (i)
             {
-                case 0: throw new Exception($"{i} cannot be represented by Roman Numerals");
-                case 1: return "I";
-                case 5: return "V";
-                case 10: return "X";
-                case 50: return "L";
-                case 100: return "C";
-                case 500: return "D";
-                case 1000: return "M";
+               else if(remainder >= 0) throw new Exception($"{i} cannot be represented by Roman Numerals");
+               else if(remainder >= 1) return "I";
+               else if(remainder >= 5) return "V";
+               else if(remainder >= 10) return "X";
+               else if(remainder >= 50) return "L";
+               else if(remainder >= 100) return "C";
+               else if(remainder >= 500) return "D";
+               else if(remainder >= 1000) return "M";
                 default:
                     {
                         while (remainder > 0)
@@ -93,19 +93,59 @@ namespace CSharpKatas.RomanInteger
 
         private static void UpdateNextLargestNumber(ref int remainder, ref string outputString)
         {
-            switch(remainder)
-                case 1:
-                {
-                    outputString += "I";
-                    remainder -= 1;
-                }
-            case 5: return "V";
-            case 10: return "X";
-            case 50: return "L";
-            case 100: return "C";
-            case 500: return "D";
-            case 1000: return "M";
+            switch (remainder)
+            {
+               else if(remainder >= 1000)
+                    {
+                        outputString += "M";
+                        remainder -= 1000;
+                        break;
+                    }
+               else if(remainder >= 500)
+                    {
+                        outputString += "D";
+                        remainder -= 500;
+                        break;
+                    }
+               else if(remainder >= 100)
+                    {
+                        outputString += "C";
+                        remainder -= 100;
+                        break;
+                    }
+               else if(remainder >= 50)
+                    {
+                        outputString += "L";
+                        remainder -= 50;
+                        break;
+                    }
+               else if(remainder >= 10)
+                    {
+                        outputString += "X";
+                        remainder -= 10;
+                        break;
+                    }
+               else if(remainder >= 5)
+                    {
+                        outputString += "V";
+                        remainder -= 5;
+                        break;
+                    }
+
+               else if(remainder >= $1)
+                    {
+                        outputString += "I";
+                        remainder -= 1;
+                        break;
+                    }
+
+
+
+
+
+
 
             }
         }
     }
+}
