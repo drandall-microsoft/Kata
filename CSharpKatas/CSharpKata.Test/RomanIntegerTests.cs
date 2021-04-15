@@ -1,11 +1,18 @@
 ﻿using CSharpKatas.RomanInteger;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 
 namespace CSharpKata.Test
 {
     [TestClass]
     public class RomanIntegerTests
     {
+        [TestMethod]
+        public void GivenZero_ToRoman_ThrowsException()
+        {
+            Assert.ThrowsException<Exception>(() => 0.ToRoman());
+        }
+
         [TestMethod]
         public void GivenOne_ToRoman_ReturnsI()
         {
@@ -46,6 +53,24 @@ namespace CSharpKata.Test
         public void GivenOneThousand_ToRoman_ReturnsM()
         {
             Assert.AreEqual("M", 1000.ToRoman());
+        }
+
+        [TestMethod]
+        public void GivenTwo_ToRoman_ReturnsII()
+        {
+            Assert.AreEqual("II", 2.ToRoman());
+        }
+
+        [TestMethod]
+        public void GivenSix_ToRoman_ReturnsVI()
+        {
+            Assert.AreEqual("VI", 6.ToRoman());
+        }
+
+        [TestMethod]
+        public void GivenFour_ToRoman_ReturnsIV()
+        {
+            Assert.AreEqual("IV", 4.ToRoman());
         }
     }
 }
