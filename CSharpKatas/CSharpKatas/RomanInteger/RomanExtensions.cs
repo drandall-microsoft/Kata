@@ -12,6 +12,14 @@ namespace CSharpKatas.RomanInteger
             //{
             //}
 
+            //9 = IX
+            //40 = XL
+            //90 = XC
+            //99 = IC??
+            //CD = 400
+            //XD = 490
+            //ID = 499
+
             //3321 -> MMM + 321
             //321 -> CCC + 21
             //21 -> XX + 1
