@@ -21,7 +21,7 @@ namespace CSharpKatas.RomanInteger
             {999, "IM"}
         };
 
-        public static string ToRoman(this int i)
+        public static string ToRoman2(this int i)
         {
             int remainder = i;
             string result = "";
