@@ -79,5 +79,11 @@ namespace CSharpKata.Test
             Assert.AreEqual("IX", 9.ToRoman());
         }
 
+        [TestMethod]
+        public void GivenTwentyNine_ToRoman_ReturnsXXIX()
+        {
+            Assert.AreEqual("XXIX", 29.ToRoman());
+        }
+
     }
 }

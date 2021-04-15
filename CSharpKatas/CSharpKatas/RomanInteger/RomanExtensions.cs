@@ -5,7 +5,11 @@ namespace CSharpKatas.RomanInteger
 {
     public static class RomanExtensions
     {
-        private static Dictionary<int, string> specialCases = new Dictionary<int, string>();
+        private static readonly Dictionary<int, string> SpecialCases = new Dictionary<int, string>
+        {
+            {4, "IV"},
+            {9, "IX"},
+        };
 
         public static string ToRoman(this int i)
         {
@@ -42,12 +46,25 @@ namespace CSharpKatas.RomanInteger
                     {
                         while (remainder > 0)
                         {
-                            if (remainder > 5)
+                            while (remainder >= 10)
                             {
-                                if(remainder == 9)
+                                if (SpecialCases.ContainsKey(remainder))
                                 {
-                                    result += "IX";
-                                    remainder -= 9;
+                                    result += SpecialCases[remainder];
+                                    remainder = 0;
+                                }
+                                else
+                                {
+                                    result += "X";
+                                    remainder -= 10;
+                                }
+                            }
+                            while (remainder > 5)
+                            {
+                                if (SpecialCases.ContainsKey(remainder))
+                                {
+                                    result += SpecialCases[remainder];
+                                    remainder = 0;
                                 }
                                 else
                                 {
@@ -55,12 +72,12 @@ namespace CSharpKatas.RomanInteger
                                     remainder -= 5;
                                 }
                             }
-                            else if (remainder > 0)
+                            while (remainder > 0)
                             {
-                                if (remainder == 4)
+                                if (SpecialCases.ContainsKey(remainder))
                                 {
-                                    result += "IV";
-                                    remainder -= 4;
+                                    result += SpecialCases[remainder];
+                                    remainder = 0;
                                 }
                                 else
                                 {
@@ -73,5 +90,22 @@ namespace CSharpKatas.RomanInteger
                     }
             }
         }
+
+        private static void UpdateNextLargestNumber(ref int remainder, ref string outputString)
+        {
+            switch(remainder)
+                case 1:
+                {
+                    outputString += "I";
+                    remainder -= 1;
+                }
+            case 5: return "V";
+            case 10: return "X";
+            case 50: return "L";
+            case 100: return "C";
+            case 500: return "D";
+            case 1000: return "M";
+
+            }
+        }
     }
-}
