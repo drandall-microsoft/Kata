@@ -9,6 +9,16 @@ namespace CSharpKatas.RomanInteger
         {
             {4, "IV"},
             {9, "IX"},
+            {40, "XL"},
+            {49, "IL"},
+            {90, "XC"},
+            {99, "IC"},
+            {400, "CD"},
+            {490, "XD"},
+            {499, "ID"},
+            {900, "CM"},
+            {990, "XM"},
+            {999, "IM"}
         };
 
         public static string ToRoman(this int i)
@@ -16,6 +26,18 @@ namespace CSharpKatas.RomanInteger
             int remainder = i;
             string result = "";
 
+            if (remainder < 1)
+            {
+                throw new Exception($"{i} cannot be represented by Roman Numerals");
+            }
+
+            while (remainder > 0)
+            {
+                UpdateSpecialCase(ref remainder, ref result);
+                UpdateNextLargestNumber(ref remainder, ref result);
+            }
+
+            return result;
             //while (remainder >= 1000)
             //{
             //}
@@ -27,124 +49,54 @@ namespace CSharpKatas.RomanInteger
             //CD = 400
             //XD = 490
             //ID = 499
+        }
 
-            //3321 -> MMM + 321
-            //321 -> CCC + 21
-            //21 -> XX + 1
-            //1 -> I
-            switch (i)
+        private static void UpdateSpecialCase(ref int remainder, ref string outputString)
+        {
+            if (SpecialCases.ContainsKey(remainder))
             {
-               else if(remainder >= 0) throw new Exception($"{i} cannot be represented by Roman Numerals");
-               else if(remainder >= 1) return "I";
-               else if(remainder >= 5) return "V";
-               else if(remainder >= 10) return "X";
-               else if(remainder >= 50) return "L";
-               else if(remainder >= 100) return "C";
-               else if(remainder >= 500) return "D";
-               else if(remainder >= 1000) return "M";
-                default:
-                    {
-                        while (remainder > 0)
-                        {
-                            while (remainder >= 10)
-                            {
-                                if (SpecialCases.ContainsKey(remainder))
-                                {
-                                    result += SpecialCases[remainder];
-                                    remainder = 0;
-                                }
-                                else
-                                {
-                                    result += "X";
-                                    remainder -= 10;
-                                }
-                            }
-                            while (remainder > 5)
-                            {
-                                if (SpecialCases.ContainsKey(remainder))
-                                {
-                                    result += SpecialCases[remainder];
-                                    remainder = 0;
-                                }
-                                else
-                                {
-                                    result += "V";
-                                    remainder -= 5;
-                                }
-                            }
-                            while (remainder > 0)
-                            {
-                                if (SpecialCases.ContainsKey(remainder))
-                                {
-                                    result += SpecialCases[remainder];
-                                    remainder = 0;
-                                }
-                                else
-                                {
-                                    result += "I";
-                                    remainder--;
-                                }
-                            }
-                        }
-                        return result;
-                    }
+                outputString += SpecialCases[remainder];
+                remainder = 0;
             }
         }
 
         private static void UpdateNextLargestNumber(ref int remainder, ref string outputString)
         {
-            switch (remainder)
+            if (remainder >= 1000)
             {
-               else if(remainder >= 1000)
-                    {
-                        outputString += "M";
-                        remainder -= 1000;
-                        break;
-                    }
-               else if(remainder >= 500)
-                    {
-                        outputString += "D";
-                        remainder -= 500;
-                        break;
-                    }
-               else if(remainder >= 100)
-                    {
-                        outputString += "C";
-                        remainder -= 100;
-                        break;
-                    }
-               else if(remainder >= 50)
-                    {
-                        outputString += "L";
-                        remainder -= 50;
-                        break;
-                    }
-               else if(remainder >= 10)
-                    {
-                        outputString += "X";
-                        remainder -= 10;
-                        break;
-                    }
-               else if(remainder >= 5)
-                    {
-                        outputString += "V";
-                        remainder -= 5;
-                        break;
-                    }
+                outputString += "M";
+                remainder -= 1000;
+            }
+            else if (remainder >= 500)
+            {
+                outputString += "D";
+                remainder -= 500;
+            }
+            else if (remainder >= 100)
+            {
+                outputString += "C";
+                remainder -= 100;
+            }
+            else if (remainder >= 50)
+            {
+                outputString += "L";
+                remainder -= 50;
+            }
+            else if (remainder >= 10)
+            {
+                outputString += "X";
+                remainder -= 10;
+            }
+            else if (remainder >= 5)
+            {
+                outputString += "V";
+                remainder -= 5;
+            }
 
-               else if(remainder >= $1)
-                    {
-                        outputString += "I";
-                        remainder -= 1;
-                        break;
-                    }
-
-
-
-
-
-
-
+            else if (remainder >= 1)
+            {
+                outputString += "I";
+                remainder -= 1;
             }
         }
     }

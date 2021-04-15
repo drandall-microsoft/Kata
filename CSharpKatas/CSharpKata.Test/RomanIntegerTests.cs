@@ -85,5 +85,11 @@ namespace CSharpKata.Test
             Assert.AreEqual("XXIX", 29.ToRoman());
         }
 
+        [TestMethod]
+        public void GivenForty_ToRoman_ReturnsXL()
+        {
+            Assert.AreEqual("XL", 40.ToRoman());
+        }
+
     }
 }
