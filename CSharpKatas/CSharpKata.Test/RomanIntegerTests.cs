@@ -91,5 +91,10 @@ namespace CSharpKata.Test
             Assert.AreEqual("XL", 40.ToRoman());
         }
 
+        [TestMethod]
+        public void GivenNinety_ToRoman_ReturnXC()
+        {
+            Assert.AreEqual("XC", 90.ToRoman());
+        }
     }
 }
