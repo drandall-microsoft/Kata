@@ -1,13 +1,17 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace CSharpKatas.RomanInteger
 {
     public static class RomanExtensions
     {
+        private static Dictionary<int, string> specialCases = new Dictionary<int, string>();
+
         public static string ToRoman(this int i)
         {
             int remainder = i;
             string result = "";
+
             //while (remainder >= 1000)
             //{
             //}
@@ -40,14 +44,29 @@ namespace CSharpKatas.RomanInteger
                         {
                             if (remainder > 5)
                             {
-                                result += "V";
-                                remainder -= 5;
+                                if(remainder == 9)
+                                {
+                                    result += "IX";
+                                    remainder -= 9;
+                                }
+                                else
+                                {
+                                    result += "V";
+                                    remainder -= 5;
+                                }
                             }
                             else if (remainder > 0)
                             {
-                                result += "I";
-                                remainder--;
-
+                                if (remainder == 4)
+                                {
+                                    result += "IV";
+                                    remainder -= 4;
+                                }
+                                else
+                                {
+                                    result += "I";
+                                    remainder--;
+                                }
                             }
                         }
                         return result;
