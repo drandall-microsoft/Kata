@@ -1,5 +1,6 @@
 ﻿using ApprovalTests;
 using ApprovalTests.Reporters;
+using CSharpKatas.RomanInteger;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -11,14 +12,16 @@ namespace CSharpKata.Test
     [TestClass]
     public class RomanIntegerApprovalTest
     {
-
         [TestMethod]
-        public void TestList()
+        public void AllRomanNumerals()
         {
-            var names = new[] { "Llewellyn", "James", "Dan", "Jason", "Katrina" };
-            Array.Sort(names);
-            Approvals.VerifyAll(names, label: "");
-        }
+            var result = new Dictionary<int, string>();
+            for (int i = 1; i <= 3000; i++)
+            {
+                result[i] = i.ToRoman();
+            }
 
+            Approvals.VerifyAll(result);
+        }
     }
 }

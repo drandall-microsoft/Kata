@@ -1,3 +1,4 @@
+*.received.txt
 #Compiled object files
 *.slo
 *.lo
