@@ -102,5 +102,14 @@ namespace CSharpKata.Test
         {
             Assert.AreEqual("XCI", 91.ToRoman());
         }
+
+        [TestMethod]
+        public void RomanNumeral_RoundTrips()
+        {
+            for (int i = 1; i < 3000; i++)
+            {
+                Assert.AreEqual(i, (i.ToRoman()).FromRoman());
+            }
+        }
     }
 }
