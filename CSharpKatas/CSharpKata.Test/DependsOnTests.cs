@@ -37,5 +37,12 @@ namespace CSharpKata.Test
             bottomDependency.Load();
             Assert.IsTrue(topDependency.CanLoad());
         }
+
+        [TestMethod]
+        public void CanLoad_AfterLoad_ReturnsFalse()
+        {
+            bottomDependency.Load();
+            Assert.IsFalse(bottomDependency.CanLoad());
+        }
     }
 }

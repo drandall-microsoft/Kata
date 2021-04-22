@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace CSharpKatas.DependsOn
 {
@@ -9,7 +7,10 @@ namespace CSharpKatas.DependsOn
     {
         private HashSet<Dependency> dependencies = new HashSet<Dependency>();
 
-        private bool hasLoaded;
+        public bool IsLoading { get; private set; }
+        public bool DoneLoading { get; private set; }
+
+        private bool DependenciesDoneLoading => !dependencies.Any(d => d.DoneLoading == false);
 
         public Dependency(params Dependency[] dependencies)
         {
@@ -21,12 +22,13 @@ namespace CSharpKatas.DependsOn
 
         public bool CanLoad()
         {
-            return !dependencies.Any(d => d.hasLoaded == false);
+            return !DoneLoading && DependenciesDoneLoading;
         }
 
         public void Load()
         {
-            hasLoaded = true;
+            DoneLoading = true;
         }
+
     }
 }
