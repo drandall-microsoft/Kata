@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace CSharpKatas.DependsOn
 {
-    public class Dependency
+    public abstract class Dependency
     {
         private HashSet<Dependency> dependencies = new HashSet<Dependency>();
 
@@ -22,13 +22,21 @@ namespace CSharpKatas.DependsOn
 
         public bool CanLoad()
         {
-            return !DoneLoading && DependenciesDoneLoading;
+            return !IsLoading && !DoneLoading && DependenciesDoneLoading;
         }
 
         public void Load()
         {
-            DoneLoading = true;
+            IsLoading = true;
+            LoadImpl();
         }
 
+        public abstract void Update();
+        protected void FinishedLoading()
+        {
+            IsLoading = false;
+            DoneLoading = true;
+        }
+        protected abstract void LoadImpl();
     }
 }

@@ -15,8 +15,8 @@ namespace CSharpKata.Test
         [TestInitialize]
         public void Setup()
         {
-            bottomDependency = new Dependency();
-            topDependency = new Dependency(bottomDependency);
+            bottomDependency = new Example();
+            topDependency = new Example(bottomDependency);
         }
 
         [TestMethod]
@@ -35,6 +35,7 @@ namespace CSharpKata.Test
         public void CanLoad_DependencyWithLoadedDependency_ReturnsTrue()
         {
             bottomDependency.Load();
+            bottomDependency.Update();
             Assert.IsTrue(topDependency.CanLoad());
         }
 
@@ -43,6 +44,22 @@ namespace CSharpKata.Test
         {
             bottomDependency.Load();
             Assert.IsFalse(bottomDependency.CanLoad());
+        }
+
+        private class Example : Dependency
+        {
+            public Example(params Dependency[] dependencies) : base(dependencies)
+            {
+            }
+
+            public override void Update()
+            {
+                FinishedLoading();
+            }
+
+            protected override void LoadImpl()
+            {
+            }
         }
     }
 }
