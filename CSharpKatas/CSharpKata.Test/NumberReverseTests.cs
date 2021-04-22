@@ -40,5 +40,17 @@ namespace CSharpKata.Test
         {
             Assert.AreEqual(21, reverser.Reverse(120));
         }
+
+        [TestMethod]
+        public void ReverseInteger_With901000_Returns109()
+        {
+            Assert.AreEqual(109, reverser.Reverse(901000));
+        }
+
+        [TestMethod]
+        public void ReverseInteger_WithIntMax_Returns0()
+        {
+            Assert.AreEqual(0, reverser.Reverse(int.MaxValue));
+        }
     }
 }

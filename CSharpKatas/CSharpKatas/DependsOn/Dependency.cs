@@ -9,6 +9,8 @@ namespace CSharpKatas.DependsOn
     {
         private HashSet<Dependency> dependencies = new HashSet<Dependency>();
 
+        private bool hasLoaded;
+
         public Dependency(params Dependency[] dependencies)
         {
             foreach (var dep in dependencies)
@@ -19,12 +21,12 @@ namespace CSharpKatas.DependsOn
 
         public bool CanLoad()
         {
-            if (dependencies.Any())
-            {
-                return false;
-            }
+            return !dependencies.Any(d => d.hasLoaded == false);
+        }
 
-            return true;
+        public void Load()
+        {
+            hasLoaded = true;
         }
     }
 }
