@@ -4,62 +4,132 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
+using static CSharpKatas.DependsOn.Dependency.Known;
+
 namespace CSharpKata.Test
 {
     [TestClass]
     public class DependsOnTests
     {
-        private Dependency bottomDependency;
-        private Dependency topDependency;
+        private Dependency noReset;
+        private Dependency needsReset;
+
+        private bool resetCalled;
 
         [TestInitialize]
         public void Setup()
         {
-            bottomDependency = new Example();
-            topDependency = new Example(bottomDependency);
+            noReset = new Dependency(Update, ResetNotNeeded);
+            needsReset = new Dependency(Update, ResetNeeded);
         }
 
         [TestMethod]
-        public void CanLoad_DependencyWithNoDependencies_ReturnsTrue()
+        public void IsLoading_BeforeLoad_IsFalse()
         {
-            Assert.IsTrue(bottomDependency.CanLoad());
+            Assert.IsFalse(noReset.IsLoading);
         }
 
         [TestMethod]
-        public void CanLoad_DependencyWithNonLoadedDependency_ReturnsFalse()
+        public void IsLoading_AfterLoad_IsTrue()
         {
-            Assert.IsFalse(topDependency.CanLoad());
+            noReset.Load();
+            Assert.IsTrue(noReset.IsLoading);
         }
 
         [TestMethod]
-        public void CanLoad_DependencyWithLoadedDependency_ReturnsTrue()
+        public void IsLoading_AfterLoadAndUpdate_IsFalse()
         {
-            bottomDependency.Load();
-            bottomDependency.Update();
-            Assert.IsTrue(topDependency.CanLoad());
+            noReset.Load();
+            noReset.Update();
+
+            Assert.IsFalse(noReset.IsLoading);
         }
 
         [TestMethod]
-        public void CanLoad_AfterLoad_ReturnsFalse()
+        public void IsDone_BeforeLoad_IsFalse()
         {
-            bottomDependency.Load();
-            Assert.IsFalse(bottomDependency.CanLoad());
+            Assert.IsFalse(noReset.DoneLoading);
         }
 
-        private class Example : Dependency
+        [TestMethod]
+        public void IsDone_AfterLoad_IsFalse()
         {
-            public Example(params Dependency[] dependencies) : base(dependencies)
-            {
-            }
+            noReset.Load();
+            Assert.IsFalse(noReset.DoneLoading);
+        }
 
-            public override void Update()
-            {
-                FinishedLoading();
-            }
+        [TestMethod]
+        public void IsDone_AfterLoadAndUpdate_IsTrue()
+        {
+            noReset.Load();
+            noReset.Update();
 
-            protected override void LoadImpl()
-            {
-            }
+            Assert.IsTrue(noReset.DoneLoading);
+        }
+
+        [TestMethod]
+        public void IsLoading_AfterLoadThenReset_IsFalse()
+        {
+            needsReset.Load();
+            needsReset.Update();
+            needsReset.Reset();
+
+            Assert.IsFalse(needsReset.IsLoading);
+        }
+
+        [TestMethod]
+        public void DoneLoading_AfterLoadThenReset_IsFalse()
+        {
+            needsReset.Load();
+            needsReset.Update();
+            needsReset.Reset();
+
+            Assert.IsFalse(needsReset.DoneLoading);
+        }
+
+        [TestMethod]
+        public void Reset_BeforeLoad_DoesNotInvokeResetMethod()
+        {
+            needsReset.Reset();
+
+            Assert.IsFalse(resetCalled);
+        }
+
+        [TestMethod]
+        public void Reset_BeforeDone_DoesNotInvokeResetMethod()
+        {
+            needsReset.Load();
+            needsReset.Reset();
+
+            Assert.IsFalse(resetCalled);
+            Assert.IsFalse(needsReset.IsLoading);
+        }
+
+        [TestMethod]
+        public void Reset_AfterDone_InvokesResetMethod()
+        {
+            needsReset.Load();
+            needsReset.Update();
+            needsReset.Reset();
+
+            Assert.IsTrue(resetCalled);
+        }
+
+        private bool Update()
+        {
+            return true;
+        }
+
+        private bool ResetNeeded()
+        {
+            resetCalled = true;
+            return true;
+        }
+
+        private bool ResetNotNeeded()
+        {
+            resetCalled = true;
+            return false;
         }
     }
 }

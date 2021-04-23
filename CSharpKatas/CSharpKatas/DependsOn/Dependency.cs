@@ -1,42 +1,62 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace CSharpKatas.DependsOn
 {
-    public abstract class Dependency
+    public class Dependency
     {
-        private HashSet<Dependency> dependencies = new HashSet<Dependency>();
+        public enum Known
+        {
+            Zero, One, Two, Three, Four, Five
+        }
+
+        public ISet<Known> Dependencies { get; } = new HashSet<Known>();
 
         public bool IsLoading { get; private set; }
         public bool DoneLoading { get; private set; }
 
-        private bool DependenciesDoneLoading => !dependencies.Any(d => d.DoneLoading == false);
+        private readonly Func<bool> updateAction;
+        private readonly Func<bool> resetAction;
 
-        public Dependency(params Dependency[] dependencies)
+        public Dependency(Func<bool> updateAction, Func<bool> resetAction, params Known[] dependencies)
         {
+            this.updateAction = updateAction;
+            this.resetAction = resetAction;
+
             foreach (var dep in dependencies)
             {
-                this.dependencies.Add(dep);
+                Dependencies.Add(dep);
             }
-        }
-
-        public bool CanLoad()
-        {
-            return !IsLoading && !DoneLoading && DependenciesDoneLoading;
         }
 
         public void Load()
         {
             IsLoading = true;
-            LoadImpl();
         }
 
-        public abstract void Update();
-        protected void FinishedLoading()
+        public void Reset()
         {
-            IsLoading = false;
-            DoneLoading = true;
+            if (!DoneLoading)
+            {
+                IsLoading = false;
+                return;
+            }
+
+            if (resetAction?.Invoke() == true)
+            {
+                IsLoading = false;
+                DoneLoading = false;
+            }
         }
-        protected abstract void LoadImpl();
+
+        public void Update()
+        {
+            if (IsLoading)
+            {
+                DoneLoading = updateAction();
+                IsLoading = !DoneLoading;
+            }
+        }
     }
 }
