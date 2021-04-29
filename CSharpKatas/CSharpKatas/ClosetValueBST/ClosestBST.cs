@@ -1,4 +1,5 @@
 ﻿using CSharpKatas.ClosetValueBST;
+using System;
 
 namespace CSharpKatas.ClosestValueBST
 {
@@ -19,38 +20,35 @@ namespace CSharpKatas.ClosestValueBST
                 return NotFound;
             }
 
-            Node root = tree.Root;
-            Node left = root.Left;
-            Node right = root.Right;
-
-            if (root.Value > target)
-            {
-                return left.Value;
-            }
-            else if(root.Value < target)
-            {
-                return right.Value;
-            }
-            else if (root.Value == target)
-            {
-                return root.Value;
-            }
-            return NotFound;
+            return Closest(tree.Root, target);
         }
 
         private int Closest(Node node, int target)
         {
-            if(node == null)
+            if (node == null)
             {
                 return int.MaxValue;
             }
+
             Node left = node.Left;
             Node right = node.Right;
 
             int leftValue = Closest(left, target);
             int rightValue = Closest(right, target);
+            int currentValue = Math.Abs(target - node.Value);
 
-
+            if (Math.Abs(target - leftValue) < currentValue)
+            {
+                return leftValue;
+            }
+            else if (Math.Abs(target - rightValue) < currentValue)
+            {
+                return rightValue;
+            }
+            else
+            {
+                return node.Value;
+            }
         }
     }
 }

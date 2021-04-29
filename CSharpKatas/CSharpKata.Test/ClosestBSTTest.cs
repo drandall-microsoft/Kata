@@ -10,6 +10,13 @@ namespace CSharpKata.Test
     [TestClass]
     public class ClosestBSTTest
     {
+        /*
+                     10
+                5        15
+              2   5   13     22
+            1            14
+
+        */
         private ClosestBST search;
         [TestInitialize]
         public void Setup()
@@ -61,6 +68,12 @@ namespace CSharpKata.Test
         public void FindClosest_WithRightNodeEqualToTarget_ReturnsRightNodeValue()
         {
             Assert.AreEqual(15, search.FindClosest(15));
+        }
+
+        [TestMethod]
+        public void FindClosest_WithNonMatchingTarget_ReturnsClosestValue()
+        {
+            Assert.AreEqual(13, search.FindClosest(12));
         }
     }
 }
