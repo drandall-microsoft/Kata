@@ -1,26 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace CSharpKatas.DependsOn
 {
     public class Dependency
     {
-        public enum Known
+        public enum Name
         {
             Zero, One, Two, Three, Four, Five
         }
 
-        public ISet<Known> Dependencies { get; } = new HashSet<Known>();
+        public enum LoadingState { NotLoaded, Loading, DoneLoading };
 
-        public bool IsLoading { get; private set; }
-        public bool DoneLoading { get; private set; }
+        public ISet<Name> Dependencies { get; } = new HashSet<Name>();
 
-        private readonly Func<bool> updateAction;
-        private readonly Func<bool> resetAction;
+        public LoadingState CurrentState { get; private set; } = LoadingState.NotLoaded;
 
-        public Dependency(Func<bool> updateAction, Func<bool> resetAction, params Known[] dependencies)
+        private readonly Func<LoadingState> updateAction;
+        private readonly Func<LoadingState> resetAction;
+        public Name MyName { get; }
+
+        public Dependency(Name dependencyName, Func<LoadingState> updateAction, Func<LoadingState> resetAction, params Name[] dependencies)
         {
+            MyName = dependencyName;
             this.updateAction = updateAction;
             this.resetAction = resetAction;
 
@@ -28,34 +30,39 @@ namespace CSharpKatas.DependsOn
             {
                 Dependencies.Add(dep);
             }
+
+            DependencyLoader.RegisterDependency(this);
         }
 
         public void Load()
         {
-            IsLoading = true;
+            if (CurrentState != LoadingState.NotLoaded)
+            {
+                throw new Exception($"{MyName} Called load, but was in the state {CurrentState}");
+            }
+
+            CurrentState = LoadingState.Loading;
         }
 
         public void Reset()
         {
-            if (!DoneLoading)
+            if (CurrentState != LoadingState.DoneLoading)
             {
-                IsLoading = false;
+                CurrentState = LoadingState.NotLoaded;
                 return;
             }
 
-            if (resetAction?.Invoke() == true)
+            if (resetAction != null)
             {
-                IsLoading = false;
-                DoneLoading = false;
+                CurrentState = resetAction();
             }
         }
 
         public void Update()
         {
-            if (IsLoading)
+            if (CurrentState == LoadingState.Loading)
             {
-                DoneLoading = updateAction();
-                IsLoading = !DoneLoading;
+                CurrentState = updateAction();
             }
         }
     }
