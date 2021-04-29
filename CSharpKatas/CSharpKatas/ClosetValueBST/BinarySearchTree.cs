@@ -10,5 +10,10 @@ namespace CSharpKatas.ClosetValueBST
         {
 
         }
+
+        public BinarySearchTree(int root)
+        {
+
+        }
     }
 }

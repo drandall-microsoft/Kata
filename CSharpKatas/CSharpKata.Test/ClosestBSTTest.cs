@@ -1,4 +1,5 @@
-﻿using CSharpKatas.ClosetValueBST;
+﻿using CSharpKatas.ClosestValueBST;
+using CSharpKatas.ClosetValueBST;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -11,14 +12,22 @@ namespace CSharpKata.Test
     {
 
         [TestMethod]
-        public void FindClosest_WithEmptyTree_ReturnNull()
+        public void FindClosest_WithEmptyTree_ReturnsSentinalValue()
         {
             BinarySearchTree tree = new BinarySearchTree();
 
-            ClosestBST search = new ClosestBST(tree, 0);
-
+            ClosestBST search = new ClosestBST(tree);
+            Assert.AreEqual(ClosestBST.NotFound, search.FindClosest(0));
         }
-    
+
+        [TestMethod]
+        public void FindClosest_WithRootEqualToTarget_ReturnsRootValue()
+        {
+            BinarySearchTree tree = new BinarySearchTree(10);
+
+            ClosestBST search = new ClosestBST(tree);
+            Assert.AreEqual(10, search.FindClosest(10));
+        }
     }
 }
 /*
