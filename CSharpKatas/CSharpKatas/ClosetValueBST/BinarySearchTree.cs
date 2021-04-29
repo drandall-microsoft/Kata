@@ -4,7 +4,11 @@ using System.Text;
 
 namespace CSharpKatas.ClosetValueBST
 {
-    class BinarySearchTree
+    public class BinarySearchTree
     {
+        public BinarySearchTree()
+        {
+
+        }
     }
 }
