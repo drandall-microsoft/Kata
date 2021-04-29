@@ -1,7 +1,4 @@
 ﻿using CSharpKatas.ClosetValueBST;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace CSharpKatas.ClosestValueBST
 {
@@ -17,7 +14,16 @@ namespace CSharpKatas.ClosestValueBST
 
         public int FindClosest(int target)
         {
-            if(tree.Root.Value == target)
+            if (tree?.Root == null)
+            {
+                return NotFound;
+            }
+
+            if (tree.Root.Value > target)
+            {
+                return tree.Root.Left.Value;
+            }
+            else if (tree.Root.Value == target)
             {
                 return tree.Root.Value;
             }
