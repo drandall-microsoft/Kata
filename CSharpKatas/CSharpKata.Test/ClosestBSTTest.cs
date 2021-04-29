@@ -26,17 +26,6 @@ namespace CSharpKata.Test
 
             BinarySearchTree bst = new BinarySearchTree(n10);
             search = new ClosestBST(bst);
-            /*
-             {"id": "10", "left": "5", "right": "15", "value": 10},
-      {"id": "15", "left": "13", "right": "22", "value": 15},
-      {"id": "22", "left": null, "right": null, "value": 22},
-      {"id": "13", "left": null, "right": "14", "value": 13},
-      {"id": "14", "left": null, "right": null, "value": 14},
-      {"id": "5", "left": "2", "right": "5-2", "value": 5},
-      {"id": "5-2", "left": null, "right": null, "value": 5},
-      {"id": "2", "left": "1", "right": null, "value": 2},
-      {"id": "1", "left": null, "right": null, "value": 1}
-            */
         }
 
         [TestMethod]
@@ -59,39 +48,19 @@ namespace CSharpKata.Test
         [TestMethod]
         public void FindClosest_WithRootEqualToTarget_ReturnsRootValue()
         {
-            BinarySearchTree tree = new BinarySearchTree(new Node(10));
-
-            ClosestBST search = new ClosestBST(tree);
             Assert.AreEqual(10, search.FindClosest(10));
         }
 
         [TestMethod]
         public void FindClosest_WithLeftNodeEqualToTarget_ReturnsLeftNodeValue()
         {
-            Node leftNode = new Node(5);
-            BinarySearchTree tree = new BinarySearchTree(new Node(10, leftNode));
-
-            ClosestBST search = new ClosestBST(tree);
             Assert.AreEqual(5, search.FindClosest(5));
+        }
+
+        [TestMethod]
+        public void FindClosest_WithRightNodeEqualToTarget_ReturnsRightNodeValue()
+        {
+            Assert.AreEqual(15, search.FindClosest(15));
         }
     }
 }
-/*
- * {
-  "tree": {
-    "nodes": [
-      {"id": "10", "left": "5", "right": "15", "value": 10},
-      {"id": "15", "left": "13", "right": "22", "value": 15},
-      {"id": "22", "left": null, "right": null, "value": 22},
-      {"id": "13", "left": null, "right": "14", "value": 13},
-      {"id": "14", "left": null, "right": null, "value": 14},
-      {"id": "5", "left": "2", "right": "5-2", "value": 5},
-      {"id": "5-2", "left": null, "right": null, "value": 5},
-      {"id": "2", "left": "1", "right": null, "value": 2},
-      {"id": "1", "left": null, "right": null, "value": 1}
-    ],
-    "root": "10"
-  },
-  "target": 12
-}
-*/

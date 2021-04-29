@@ -19,15 +19,38 @@ namespace CSharpKatas.ClosestValueBST
                 return NotFound;
             }
 
-            if (tree.Root.Value > target)
+            Node root = tree.Root;
+            Node left = root.Left;
+            Node right = root.Right;
+
+            if (root.Value > target)
             {
-                return tree.Root.Left.Value;
+                return left.Value;
             }
-            else if (tree.Root.Value == target)
+            else if(root.Value < target)
             {
-                return tree.Root.Value;
+                return right.Value;
+            }
+            else if (root.Value == target)
+            {
+                return root.Value;
             }
             return NotFound;
+        }
+
+        private int Closest(Node node, int target)
+        {
+            if(node == null)
+            {
+                return int.MaxValue;
+            }
+            Node left = node.Left;
+            Node right = node.Right;
+
+            int leftValue = Closest(left, target);
+            int rightValue = Closest(right, target);
+
+
         }
     }
 }
