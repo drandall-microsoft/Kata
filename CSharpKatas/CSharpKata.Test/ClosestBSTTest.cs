@@ -14,7 +14,7 @@ namespace CSharpKata.Test
         [TestMethod]
         public void FindClosest_WithEmptyTree_ReturnsSentinalValue()
         {
-            BinarySearchTree tree = new BinarySearchTree();
+            BinarySearchTree tree = new BinarySearchTree(null);
 
             ClosestBST search = new ClosestBST(tree);
             Assert.AreEqual(ClosestBST.NotFound, search.FindClosest(0));
@@ -23,7 +23,7 @@ namespace CSharpKata.Test
         [TestMethod]
         public void FindClosest_WithRootEqualToTarget_ReturnsRootValue()
         {
-            BinarySearchTree tree = new BinarySearchTree(10);
+            BinarySearchTree tree = new BinarySearchTree(new Node(10));
 
             ClosestBST search = new ClosestBST(tree);
             Assert.AreEqual(10, search.FindClosest(10));

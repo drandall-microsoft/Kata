@@ -6,14 +6,11 @@ namespace CSharpKatas.ClosetValueBST
 {
     public class BinarySearchTree
     {
-        public BinarySearchTree()
+        public Node Root { get; }
+
+        public BinarySearchTree(Node root)
         {
-
-        }
-
-        public BinarySearchTree(int root)
-        {
-
+            Root = root;
         }
     }
 }
