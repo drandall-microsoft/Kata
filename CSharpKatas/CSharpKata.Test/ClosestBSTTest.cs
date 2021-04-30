@@ -75,5 +75,48 @@ namespace CSharpKata.Test
         {
             Assert.AreEqual(13, search.FindClosest(12));
         }
+
+        [TestMethod]
+        public void BrokeTest()
+        {
+            Node n208 = new Node(208);
+            Node n206 = new Node(206);
+            Node n4500 = new Node(4500);
+            Node n203 = new Node(203);
+            Node n60 = new Node(60);
+            Node n5_2 = new Node(5);
+            Node n3 = new Node(3);
+            Node n1_5 = new Node(1);
+
+            Node neg403 = new Node(-403);
+            Node neg51 = new Node(-51, neg403);
+
+            Node n1001 = new Node(1001, null, n4500);
+            Node n207 = new Node(207, n206, n208);
+            Node n55000 = new Node(55000, n1001);
+            Node n205 = new Node(205, null, n207);
+            Node n1_4 = new Node(1, null, n1_5);
+            Node n1_3 = new Node(1, null, n1_4);
+            Node n57 = new Node(57, null, n60);
+            Node n1_2 = new Node(1, null, n1_3);
+            Node n22 = new Node(22, null, n57);
+            Node n204 = new Node(204, n203, n205);
+            Node n502 = new Node(502, n204, n55000);
+            Node n15 = new Node(15, n5_2, n22);
+
+            Node n1 = new Node(1, neg51, n1_2);
+
+            Node n2 = new Node(2, n1, n3);
+
+            Node n5 = new Node(5, n2, n15);
+
+            Node n100 = new Node(100, n5, n502);
+
+            BinarySearchTree tree = new BinarySearchTree(n100);
+
+            ClosestBST search = new ClosestBST(tree);
+
+            Assert.AreEqual(1, search.FindClosest(-1));
+        }
     }
 }

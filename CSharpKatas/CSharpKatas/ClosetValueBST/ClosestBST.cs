@@ -27,7 +27,8 @@ namespace CSharpKatas.ClosestValueBST
         {
             if (node == null)
             {
-                return int.MaxValue;
+                //return int.MaxValue;
+                return 999999;
             }
 
             Node left = node.Left;
@@ -37,11 +38,11 @@ namespace CSharpKatas.ClosestValueBST
             int rightValue = Closest(right, target);
             int currentValue = Math.Abs(target - node.Value);
 
-            if (Math.Abs(target - leftValue) < currentValue)
+            if (Math.Abs(leftValue - target) < currentValue)
             {
                 return leftValue;
             }
-            else if (Math.Abs(target - rightValue) < currentValue)
+            else if (Math.Abs(rightValue - target) < currentValue)
             {
                 return rightValue;
             }
