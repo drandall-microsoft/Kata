@@ -32,38 +32,38 @@ namespace CSharpKatas.DependsOn
             }
 
             DependencyLoader.RegisterDependency(this);
-        }
-
-        public void Load()
-        {
-            if (CurrentState != LoadingState.NotLoaded)
-            {
-                throw new Exception($"{MyName} Called load, but was in the state {CurrentState}");
             }
 
-            CurrentState = LoadingState.Loading;
-        }
-
-        public void Reset()
-        {
-            if (CurrentState != LoadingState.DoneLoading)
+            public void Load()
             {
-                CurrentState = LoadingState.NotLoaded;
-                return;
+                if (CurrentState != LoadingState.NotLoaded)
+                {
+                    throw new Exception($"{MyName} Called load, but was in the state {CurrentState}");
+                }
+
+                CurrentState = LoadingState.Loading;
             }
 
-            if (resetAction != null)
+            public void Reset()
             {
-                CurrentState = resetAction();
-            }
-        }
+                if (CurrentState != LoadingState.DoneLoading)
+                {
+                    CurrentState = LoadingState.NotLoaded;
+                    return;
+                }
 
-        public void Update()
-        {
-            if (CurrentState == LoadingState.Loading)
+                if (resetAction != null)
+                {
+                    CurrentState = resetAction();
+                }
+            }
+
+            public void Update()
             {
-                CurrentState = updateAction();
+                if (CurrentState == LoadingState.Loading)
+                {
+                    CurrentState = updateAction();
+                }
             }
         }
     }
-}
