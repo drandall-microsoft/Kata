@@ -9,12 +9,12 @@ namespace CSharpKatas.AmericanBowling
         public static int Calculate(Game game)
         {
             int score = 0;
-            PieceMultiplierCollection pieceMultipliers = new PieceMultiplierCollection(game.CountFramePieces());
-
             int currentFramePiece = 0;
+            PieceMultiplierCollection pieceMultipliers = new PieceMultiplierCollection(game.CountFramePieces());
+            bool specialFrame = false;
             foreach (var frame in game.Frames)
             {
-                bool specialFrame = frame.FramePieces.Count == 3;
+                specialFrame = frame.FramePieces.Count == 3;
 
                 foreach (var piece in frame.FramePieces)
                 {

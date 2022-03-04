@@ -87,19 +87,29 @@ namespace CSharpKata.Test
             game.Frames.Add(new Frame().Strike().Strike().Strike());
 
             Assert.AreEqual(30, ScoreCalculator.Calculate(game));
+        }
 
-            //X X X
-            //1 2 3
-            //30 + 20 + 10 = 60
-            //1 1 1
-            // 10 + 10 + 10
+        [TestMethod]
+        public void Calculate_MaxNonCleanGame_Returns90()
+        {
+            for(int i = 0; i < 10; i++)
+            {
+                game.Frames.Add(new Frame().WithPins(9));
+            }
 
-            //[3/3]
-            //3 + 7 + 3 = 13
-            //3 + 10 + 3 = 16
+            Assert.AreEqual(90, ScoreCalculator.Calculate(game));
+        }
 
-            //[XX0]
-            //[X34
+        [TestMethod]
+        public void Calculate_MinimumCleanScore_Returns100()
+        {
+            for (int i = 0; i < 9; i++)
+            {
+                game.Frames.Add(new Frame().WithPins(0).Spare());
+            }
+            game.Frames.Add(new Frame().WithPins(0).Spare().WithPins(0));
+
+            Assert.AreEqual(100, ScoreCalculator.Calculate(game));
         }
     }
 }
