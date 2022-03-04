@@ -6,32 +6,27 @@ namespace CSharpKatas.AmericanBowling
 {
     public class ScoreCalculator
     {
+        // for each frame, for each frame piece
+        // - 
         public static int Calculate(Game game)
         {
-
-            Game testGame = new Game();
-            for(int i = 0; i < 9; i++)
+            int score = 0;
+            int bonusFrames = 0;
+            foreach (var frame in game.Frames)
             {
-                testGame.Frames.Add(new Frame().Strike());
-            }
-            testGame.Frames.Add(new Frame().Strike().Strike().Strike());
-
-            //ASSERT_ARE_EQUAL(ScoreCalculator.Calculate(testGame), 300);
-            Frame f = new Frame().WithPins(4).Spare();
-
-            new Frame().Strike();
-
-            new Frame().Strike().Strike().Strike();
-
-            new Frame().Strike().WithPins(4).Spare();
-            foreach(var frame in game.Frames)
-            {
-                foreach(var piece in frame.FramePieces)
+                foreach (var piece in frame.FramePieces)
                 {
+                    int pins = (int)piece.Pins;
+                    score += pins;
+                    if (bonusFrames > 0)
+                    {
+                        score += pins;
+                        bonusFrames--;
+                    }
                 }
             }
 
-            return 0;
+            return score;
         }
     }
 }

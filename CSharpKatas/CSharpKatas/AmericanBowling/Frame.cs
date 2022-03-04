@@ -6,6 +6,8 @@ namespace CSharpKatas.AmericanBowling
 {
     public class Frame
     {
+        public const uint MaxPins = 10;
+
         public Frame()
         {
 
@@ -23,7 +25,7 @@ namespace CSharpKatas.AmericanBowling
             return this;
         }
 
-        public Frame WithPins(int pins)
+        public Frame WithPins(uint pins)
         {
             this.FramePieces.Add(new PinCount(pins));
             return this;
@@ -34,28 +36,28 @@ namespace CSharpKatas.AmericanBowling
 
     public abstract class FramePiece
     {
-        public abstract int Score { get; }
+        public abstract uint Pins { get; }
     }
 
     public class Strike : FramePiece
     {
-        public override int Score => 10;
+        public override uint Pins => Frame.MaxPins;
     }
 
     public class Spare : FramePiece
     {
-        public override int Score => 10;
+        public override uint Pins => Frame.MaxPins;
     }
 
     public class PinCount : FramePiece
     {
-        private int pins;
-        public PinCount(int pins)
+        private uint pins;
+        public PinCount(uint pins)
         {
             this.pins = pins;
         }
 
-        public override int Score => pins;
+        public override uint Pins => pins;
     }
 
     //FramePiece

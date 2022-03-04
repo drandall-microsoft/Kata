@@ -6,7 +6,7 @@ namespace CSharpKatas.AmericanBowling
 {
     public class Game
     {
-        public List<Frame> Frames { get; }
+        public List<Frame> Frames { get; } = new List<Frame>();
 
     }
 }
