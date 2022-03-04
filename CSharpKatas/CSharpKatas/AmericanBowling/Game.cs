@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace CSharpKatas.AmericanBowling
 {
@@ -8,5 +6,15 @@ namespace CSharpKatas.AmericanBowling
     {
         public List<Frame> Frames { get; } = new List<Frame>();
 
+        public int CountFramePieces()
+        {
+            int total = 0;
+            foreach(var f in Frames)
+            {
+                total += f.FramePieces.Count;
+            }
+
+            return total;
+        }
     }
 }

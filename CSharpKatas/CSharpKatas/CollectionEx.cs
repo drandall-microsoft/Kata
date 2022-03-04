@@ -19,5 +19,13 @@ namespace CSharpKatas
                 target.Add(element);
             }
         }
+
+        public static void Fill<T>(this List<T> target, int fillCount, T value)
+        {
+            for(int i = 0; i < fillCount; i++)
+            {
+                target.Add(value);
+            }
+        }
     }
 }

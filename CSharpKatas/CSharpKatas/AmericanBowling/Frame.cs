@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 
 namespace CSharpKatas.AmericanBowling
 {
@@ -21,7 +22,12 @@ namespace CSharpKatas.AmericanBowling
 
         public Frame Spare()
         {
-            this.FramePieces.Add(new Spare());
+            //[X] [3/]
+            //|20| |30|
+            //[3/X]
+            //[X3/]
+            var remainingPins = MaxPins - this.FramePieces.Last().Pins;
+            this.FramePieces.Add(new Spare(remainingPins));
             return this;
         }
 
@@ -46,7 +52,12 @@ namespace CSharpKatas.AmericanBowling
 
     public class Spare : FramePiece
     {
-        public override uint Pins => Frame.MaxPins;
+        private uint pins;
+        public Spare(uint pins)
+        {
+            this.pins = pins;
+        }
+        public override uint Pins => pins;
     }
 
     public class PinCount : FramePiece
@@ -59,14 +70,4 @@ namespace CSharpKatas.AmericanBowling
 
         public override uint Pins => pins;
     }
-
-    //FramePiece
-    //Number, Strike, Spare
-    //Frame contains List<FramePieces>
-
-    //Number(3), Spare
-    //Number(3), Number(2), Strike
-    
-    //Number(3), Spare, Strike
-    //Strike, Number(3), Spare
 }
